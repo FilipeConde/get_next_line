@@ -24,8 +24,8 @@ void	setUp()
 
 void	tearDown()
 {
-	remove("output.txt");
-	remove("control.txt");
+	// remove("output.txt");
+	// remove("control.txt");
 	return ;
 }
 
@@ -49,26 +49,24 @@ void	test_printf(void)
 }
 void	should_return_file_content(void)
 {
-	int		fd_control;
+	int		fd;
 	int		count_control;
-	int		count_output;
 	char	*ptr_control;
 	char	*ptr_output;
 	char	*content = "Teste de conteudo";
 
 	CAPTURE_PRINT("control.txt", count_control, printf, "%s", content);
 
-	fd_control = open("control.txt", O_RDONLY);
-	freopen("output.txt", "w+", stdout);
-	count_output = printf("%s", get_next_line(fd_control));
-	freopen("/dev/tty", "w", stdout);
+	fd = open("control.txt", O_RDONLY);
 
 	ptr_control = read_file_to_str("control.txt");
-	ptr_output = read_file_to_str("output.txt");
+	ptr_output = get_next_line(fd);
 	TEST_ASSERT_EQUAL_STRING_MESSAGE(ptr_control, ptr_output, "ERRO");
+	printf("%s\n", ptr_control);
+	printf("%s\n", ptr_output);
 	free(ptr_control);
 	free(ptr_output);
-	close(fd_control);
+	close(fd);
 }
 
 int	main(void)
