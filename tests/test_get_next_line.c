@@ -40,20 +40,20 @@ void	test_printf(void)
 	char	*def = "teste %s";
 	char	*s = "Ops!";
 	int		count = 0;
-	
+
 	CAPTURE_PRINT("output.txt", count, printf, def, s);
 	output = read_file_to_str("output.txt");
 	TEST_ASSERT_EQUAL_STRING_MESSAGE("Ops!", output, "Error!");
 	free(output);
 	remove("output.txt");
 }
-void	should_return_file_content(void)
+void	should_return_file_content_of_one_line(void)
 {
 	int		fd;
 	int		count_control;
 	char	*ptr_control;
 	char	*ptr_output;
-	char	*content = "Teste de conteudo";
+	char	*content = "Uma linha de conteudo";
 
 	CAPTURE_PRINT("control.txt", count_control, printf, "%s", content);
 
@@ -72,6 +72,6 @@ void	should_return_file_content(void)
 int	main(void)
 {
 UNITY_BEGIN();
-RUN_TEST(should_return_file_content);
+RUN_TEST(should_return_file_content_of_one_line);
 return UNITY_END();
 }
