@@ -62,6 +62,29 @@ void	should_return_file_content_of_one_line(void)
 	ptr_control = read_file_to_str("control.txt");
 	ptr_output = get_next_line(fd);
 	TEST_ASSERT_EQUAL_STRING_MESSAGE(ptr_control, ptr_output, "ERRO");
+	// printf("%s\n", ptr_control);
+	// printf("%s\n", ptr_output);
+	free(ptr_control);
+	free(ptr_output);
+	close(fd);
+}
+
+void	should_return_file_content_of_two_lines(void)
+{
+	int		fd;
+	int		count_control;
+	char	*ptr_control;
+	char	*ptr_output;
+	char	*content = "retorna essa\nessa nao retorna";
+	char	*expected = "retorna essa";
+
+	CAPTURE_PRINT("control.txt", count_control, printf, "%s", content);
+
+	fd = open("control.txt", O_RDONLY);
+
+	ptr_control = read_file_to_str("control.txt");
+	ptr_output = get_next_line(fd);
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(expected, ptr_output, "ERRO");
 	printf("%s\n", ptr_control);
 	printf("%s\n", ptr_output);
 	free(ptr_control);
@@ -73,5 +96,6 @@ int	main(void)
 {
 UNITY_BEGIN();
 RUN_TEST(should_return_file_content_of_one_line);
+RUN_TEST(should_return_file_content_of_two_lines);
 return UNITY_END();
 }
