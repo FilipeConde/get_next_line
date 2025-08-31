@@ -76,7 +76,7 @@ void	should_return_file_content_of_two_lines(void)
 	char	*ptr_control;
 	char	*ptr_output;
 	char	*content = "retorna essa\nessa nao retorna";
-	char	*expected = "retorna essa";
+	char	*expected = "retorna essa\n";
 
 	CAPTURE_PRINT("control.txt", count_control, printf, "%s", content);
 
