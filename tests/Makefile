@@ -5,6 +5,7 @@
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+BUFFER_SIZE = 42
 
 # file paths
 SRC_DIR = ..
