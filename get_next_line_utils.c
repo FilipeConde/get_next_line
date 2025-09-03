@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/08/31 20:07:35 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:46:39 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,22 @@ size_t	get_line_size(char *s)
 		i++;
 	}
 	return (i);
+}
+
+int	get_nl_char(char *str)
+{
+	int	nl_index;
+
+	nl_index = 0;
+	while (str[nl_index] != '\0' && str[nl_index] != '\n')
+	{
+		nl_index++;
+	}
+	if (str[nl_index] == '\0')
+		nl_index = NULL;
+	else if (str[nl_index] == '\n')
+		return (nl_index);
+	
 }
 
 char *trim_line(char *str)
