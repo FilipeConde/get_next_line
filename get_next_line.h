@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:19:52 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/03 18:59:40 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/03 19:24:48 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 3
 #endif
+
+typedef struct s_list
+{
+	char			*content;
+	int				content_len;
+	struct s_list	*next;
+}	t_list;
 
 char	*get_next_line(int fd);
 char	*trim_line(char *str);
