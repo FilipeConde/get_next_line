@@ -6,11 +6,36 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/03 18:46:39 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/03 19:30:41 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+t_list	*ft_lstnew(char *content)
+{
+	t_list	*node;
+
+	node = ft_calloc(1, sizeof(t_list));
+	if (!node)
+		return (NULL);
+	node->content = content;
+	node->content_len = ft_strlen(content);
+	node->next = NULL;
+	return (node);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
 
 size_t	get_line_size(char *s)
 {

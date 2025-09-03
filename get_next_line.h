@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:19:52 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/03 19:24:48 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/03 19:30:16 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 typedef struct s_list
 {
 	char			*content;
-	int				content_len;
+	size_t				content_len;
 	struct s_list	*next;
 }	t_list;
 
@@ -31,5 +31,9 @@ char	*get_next_line(int fd);
 char	*trim_line(char *str);
 size_t	get_line_size(char *s);
 int		get_nl_char(char *str);
+t_list	*ft_lstnew(char *content);
+size_t	ft_strlen(const char *s);
+
+
 
 #endif
