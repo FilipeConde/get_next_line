@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/03 19:30:41 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:23:15 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,32 @@ t_list	*ft_lstnew(char *content)
 {
 	t_list	*node;
 
-	node = ft_calloc(1, sizeof(t_list));
+	node = malloc(1 * sizeof(t_list));
 	if (!node)
 		return (NULL);
 	node->content = content;
 	node->content_len = ft_strlen(content);
 	node->next = NULL;
 	return (node);
+}
+
+t_list	*ft_lstlast(t_list *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
+}
+
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	if (!new)
+		return ;
+	if (*lst == NULL)
+		*lst = new;
+	else
+		ft_lstlast(*lst)->next = new;
 }
 
 size_t	ft_strlen(const char *s)
