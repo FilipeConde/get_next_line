@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:19:52 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/04 17:23:13 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/04 20:17:09 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 typedef struct s_list
 {
 	char			*content;
-	size_t				content_len;
+	size_t			content_len;
 	struct s_list	*next;
 }	t_list;
 

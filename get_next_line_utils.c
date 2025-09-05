@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/04 17:23:15 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/04 20:43:37 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ t_list	*ft_lstnew(char *content)
 	node = malloc(1 * sizeof(t_list));
 	if (!node)
 		return (NULL);
-	node->content = content;
+	node->content = malloc(ft_strlen(content) + 1);
+	while (*content)
+	{
+		*(node->content)++ = *content++;
+	}
 	node->content_len = ft_strlen(content);
 	node->next = NULL;
 	return (node);
