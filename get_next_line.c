@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/05 22:34:07 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/06 15:41:23 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_next_line(int fd)
 	// char	*trimmed_line;
 	ssize_t	bytes_read;
 	char	*buffer;
-	t_list	**lst;
+	t_list	*lst;
 	// char	*remain;
 
 	bytes_read = 0;
@@ -31,14 +31,13 @@ char	*get_next_line(int fd)
 		// read file to buffer;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[bytes_read] = '\0';
-		*lst = ft_lstnew(buffer);
+		lst = ft_lstnew(buffer);
 		
 		free(buffer);
 		// if reads EOF, break
 		if (bytes_read == 0)
 			break ;
 	}
-	// trimmed_line = trim_line(str);
 	free(buffer);
 	return (NULL);
 }
