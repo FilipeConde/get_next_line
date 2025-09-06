@@ -6,16 +6,17 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/06 19:15:43 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/06 19:19:24 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*mount_line(char *buffer, int fd, t_list *head, t_list **lst)
+void	write_content_to_nodes(char *buffer, int fd, t_list *head, t_list **lst)
 {
 	ssize_t	bytes_read;
+	char	*mounted_line;
 
 	bytes_read = 0;
 	while (bytes_read >= 0)
@@ -31,8 +32,6 @@ char	*mount_line(char *buffer, int fd, t_list *head, t_list **lst)
 		if (bytes_read == 0)
 			break ;
 	}
-	
-	return ("teste");
 }
 
 char	*get_next_line(int fd)
@@ -46,7 +45,7 @@ char	*get_next_line(int fd)
 
 	//start loop
 	lst = NULL;
-	mount_line(buffer, fd, head, &lst);
+	write_content_to_nodes(buffer, fd, head, &lst);
 	free(buffer);
 	return (lst->content);
 }
