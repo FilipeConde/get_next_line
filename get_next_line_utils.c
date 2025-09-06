@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/04 20:43:37 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/05 19:06:19 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,10 @@ int	get_nl_char(char *str)
 		nl_index++;
 	}
 	if (str[nl_index] == '\0')
-		nl_index = NULL;
+		nl_index = 0;
 	else if (str[nl_index] == '\n')
 		return (nl_index);
+	return (0);
 	
 }
 
