@@ -6,24 +6,18 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/06 15:41:23 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/06 19:15:43 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*get_next_line(int fd)
+char	*mount_line(char *buffer, int fd, t_list *head, t_list **lst)
 {
-	// char	*trimmed_line;
 	ssize_t	bytes_read;
-	char	*buffer;
-	t_list	*lst;
-	// char	*remain;
 
 	bytes_read = 0;
-	//start loop
-	lst = NULL;
 	while (bytes_read >= 0)
 	{
 		// memmory allocation for buffer (buffer size plus one)
@@ -31,15 +25,30 @@ char	*get_next_line(int fd)
 		// read file to buffer;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[bytes_read] = '\0';
-		lst = ft_lstnew(buffer);
-		
-		free(buffer);
+		head = ft_lstnew(buffer);
+		ft_lstadd_back(lst, head);
 		// if reads EOF, break
 		if (bytes_read == 0)
 			break ;
 	}
+	
+	return ("teste");
+}
+
+char	*get_next_line(int fd)
+{
+	// char	*trimmed_line;
+	// ssize_t	bytes_read;
+	char	*buffer;
+	t_list	*lst;
+	t_list	*head;
+	// char	*remain;
+
+	//start loop
+	lst = NULL;
+	mount_line(buffer, fd, head, &lst);
 	free(buffer);
-	return (NULL);
+	return (lst->content);
 }
 #include <fcntl.h>
 
