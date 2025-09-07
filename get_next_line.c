@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/06 19:30:53 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/06 19:39:31 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 void	write_content_to_nodes(char *buffer, int fd, t_list *head, t_list **lst)
 {
 	ssize_t	bytes_read;
-	char	*mounted_line;
-
+	
 	bytes_read = 0;
 	while (bytes_read >= 0)
 	{
@@ -30,13 +29,15 @@ void	write_content_to_nodes(char *buffer, int fd, t_list *head, t_list **lst)
 		ft_lstadd_back(lst, head);
 		// if reads EOF, break
 		if (bytes_read == 0)
-			break ;
+		break ;
 	}
 }
 
 char	*mount_line(t_list *lst)
 {
 	size_t	line_size;
+	char	*mounted_line;
+	char	*temp_content;
 
 	line_size = 0;
 	while (lst != NULL)
@@ -45,7 +46,17 @@ char	*mount_line(t_list *lst)
 		lst = lst->next;
 	}
 	// printf("TAMANHO DA LINHA: %zu\n", line_size);
-	return ("teste");
+	mounted_line = malloc((line_size + 1) * sizeof(char));
+	while (lst != NULL)
+	{
+		temp_content = lst->content;
+		while (*temp_content)
+			*mounted_line++ = *temp_content++;
+		lst = lst->next;
+	}
+	mounted_line[line_size] = '\0';
+	printf("CONTEÚDO DA LINHA: %s\n", mounted_line);
+	return (mounted_line);
 }
 
 char	*get_next_line(int fd)
