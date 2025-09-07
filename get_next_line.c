@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/07 17:36:29 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/07 18:47:18 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	write_content_to_nodes(char *buffer, int fd, t_list *head, t_list **lst)
 	}
 }
 
-char	*mount_line(t_list *lst)
+char	*mount_str(t_list *lst)
 {
 	size_t	line_size;
-	char	*mounted_line;
+	char	*mounted_str;
 	char	*temp_content;
 	t_list	*head;
 	char	*cpy_ptr;
@@ -49,8 +49,8 @@ char	*mount_line(t_list *lst)
 		lst = lst->next;
 	}
 	lst = head;
-	mounted_line = malloc((line_size + 1) * sizeof(char));
-	cpy_ptr = mounted_line;
+	mounted_str = malloc((line_size + 1) * sizeof(char));
+	cpy_ptr = mounted_str;
 	while (lst != NULL)
 	{
 		temp_content = lst->content;
@@ -58,8 +58,31 @@ char	*mount_line(t_list *lst)
 			*cpy_ptr++ = *temp_content++;
 		lst = lst->next;
 	}
-	mounted_line[line_size] = '\0';
-	return (mounted_line);
+	mounted_str[line_size] = '\0';
+	return (mounted_str);
+}
+
+char	*line_splitter(char *full_content, char *remain)
+{
+	char	*current_line;
+	int		nl_index;
+	int		i;
+
+	i = 0;
+	nl_index = 0;
+	nl_index = get_nl_char(full_content);
+	if (nl_index >= 0)
+	{
+		current_line = malloc((nl_index + 2) * sizeof(char));
+		while (i <= nl_index)
+		{
+			current_line[i] = full_content[i];
+			i++;
+		}
+	}
+	else if (nl_index < 0)
+		current_line = malloc((int)(ft_strlen(full_content) + 1) * sizeof(char));
+	return (current_line);
 }
 
 char	*get_next_line(int fd)
@@ -67,7 +90,8 @@ char	*get_next_line(int fd)
 	char	*buffer;
 	t_list	*lst;
 	t_list	*head;
-	// char	*remain;
+	char	*full_content;
+	char	*remain;
 
 	// check remain
 	// if it has content, iterate till end or \n
@@ -75,12 +99,13 @@ char	*get_next_line(int fd)
 	//  if has end of content, keep it to next read
 	lst = NULL;
 	write_content_to_nodes(buffer, fd, head, &lst);
-	// mount_line(lst);
+	full_content = mount_str(lst);
 	free(buffer);
 	// pass mounted line to pointer
 	// keep until \n or end
 	// save from \n forward at 'remain'
-	return (mount_line(lst));
+	// return (mount_str(lst));
+	return (line_splitter(full_content, remain));
 }
 #include <fcntl.h>
 
@@ -93,7 +118,7 @@ int main(int argc, char *argv[])
 	int	fd = open(argv[1], O_RDONLY);
 
 	str = get_next_line(fd);
-	printf("%s\n", str);
+	printf("%s", str);
 	free(str);
 	return (0);
 }
