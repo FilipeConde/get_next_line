@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/06 22:51:56 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/07 17:36:29 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ void	write_content_to_nodes(char *buffer, int fd, t_list *head, t_list **lst)
 	bytes_read = 0;
 	while (bytes_read >= 0)
 	{
-		// memmory allocation for buffer (buffer size plus one)
 		buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-		// read file to buffer;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[bytes_read] = '\0';
 		head = ft_lstnew(buffer);
 		ft_lstadd_back(lst, head);
-		// if reads EOF, break
+		free(buffer);
 		if (bytes_read == 0)
-		break ;
+			break ;
+		// verify if buffer contains \n
+		// if it does, stops function and deal with line at gnl()
 	}
 }
 
@@ -69,10 +69,17 @@ char	*get_next_line(int fd)
 	t_list	*head;
 	// char	*remain;
 
+	// check remain
+	// if it has content, iterate till end or \n
+	//  if has \n, return until \n and save new remain
+	//  if has end of content, keep it to next read
 	lst = NULL;
 	write_content_to_nodes(buffer, fd, head, &lst);
 	// mount_line(lst);
 	free(buffer);
+	// pass mounted line to pointer
+	// keep until \n or end
+	// save from \n forward at 'remain'
 	return (mount_line(lst));
 }
 #include <fcntl.h>
