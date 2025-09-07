@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/06 19:39:31 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/06 22:51:56 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,27 @@ char	*mount_line(t_list *lst)
 	size_t	line_size;
 	char	*mounted_line;
 	char	*temp_content;
+	t_list	*head;
+	char	*cpy_ptr;
 
+	head = lst;
 	line_size = 0;
 	while (lst != NULL)
 	{
 		line_size += lst->content_len;
 		lst = lst->next;
 	}
-	// printf("TAMANHO DA LINHA: %zu\n", line_size);
+	lst = head;
 	mounted_line = malloc((line_size + 1) * sizeof(char));
+	cpy_ptr = mounted_line;
 	while (lst != NULL)
 	{
 		temp_content = lst->content;
 		while (*temp_content)
-			*mounted_line++ = *temp_content++;
+			*cpy_ptr++ = *temp_content++;
 		lst = lst->next;
 	}
 	mounted_line[line_size] = '\0';
-	printf("CONTEÚDO DA LINHA: %s\n", mounted_line);
 	return (mounted_line);
 }
 
@@ -66,12 +69,11 @@ char	*get_next_line(int fd)
 	t_list	*head;
 	// char	*remain;
 
-	//start loop
 	lst = NULL;
 	write_content_to_nodes(buffer, fd, head, &lst);
-	mount_line(lst);
+	// mount_line(lst);
 	free(buffer);
-	return (lst->content);
+	return (mount_line(lst));
 }
 #include <fcntl.h>
 
@@ -85,6 +87,6 @@ int main(int argc, char *argv[])
 
 	str = get_next_line(fd);
 	printf("%s\n", str);
-	//free(str);
+	free(str);
 	return (0);
 }
