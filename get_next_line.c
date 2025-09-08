@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/07 22:26:52 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/07 22:31:21 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ char	*line_splitter(char *full_content, char *remain)
 		}
 		remain = malloc((full_content_size - nl_index++) * sizeof(char));
 		i = 0;
-		while (nl_index < full_content_size)
+		while (nl_index < (int)full_content_size)
 			remain[i++] = full_content[nl_index++];
 	}
-	else if (nl_index < 0)
+	else
 		return (NULL);
 	return  (current_line);
 }
@@ -101,6 +101,9 @@ char	*get_next_line(int fd)
 	char	*remain;
 
 	lst = NULL;
+	buffer = NULL;
+	head = NULL;
+	remain = NULL;
 	write_content_to_nodes(buffer, fd, head, &lst);
 	full_content = mount_str(lst);
 	free(buffer);
