@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/07 18:47:18 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/07 22:02:09 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,12 @@ char	*line_splitter(char *full_content, char *remain)
 	char	*current_line;
 	int		nl_index;
 	int		i;
+	size_t	full_content_size;
 
+	// full_content_size = 0;
+	full_content_size = ft_strlen(full_content);
 	i = 0;
-	nl_index = 0;
+	// nl_index = 0;
 	nl_index = get_nl_char(full_content);
 	if (nl_index >= 0)
 	{
@@ -79,10 +82,14 @@ char	*line_splitter(char *full_content, char *remain)
 			current_line[i] = full_content[i];
 			i++;
 		}
+		remain = malloc((full_content_size - nl_index++) * sizeof(char));
+		i = 0;
+		while (nl_index < full_content_size)
+			remain[i++] = full_content[nl_index++];
 	}
 	else if (nl_index < 0)
-		current_line = malloc((int)(ft_strlen(full_content) + 1) * sizeof(char));
-	return (current_line);
+		return (NULL);
+	return  (current_line);
 }
 
 char	*get_next_line(int fd)
@@ -93,18 +100,10 @@ char	*get_next_line(int fd)
 	char	*full_content;
 	char	*remain;
 
-	// check remain
-	// if it has content, iterate till end or \n
-	//  if has \n, return until \n and save new remain
-	//  if has end of content, keep it to next read
 	lst = NULL;
 	write_content_to_nodes(buffer, fd, head, &lst);
 	full_content = mount_str(lst);
 	free(buffer);
-	// pass mounted line to pointer
-	// keep until \n or end
-	// save from \n forward at 'remain'
-	// return (mount_str(lst));
 	return (line_splitter(full_content, remain));
 }
 #include <fcntl.h>
