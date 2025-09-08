@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/07 22:02:09 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/07 22:26:52 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	write_content_to_nodes(char *buffer, int fd, t_list *head, t_list **lst)
 		buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[bytes_read] = '\0';
-		head = ft_lstnew(buffer);
-		ft_lstadd_back(lst, head);
+		head = ft_lstnew(buffer, lst);
+		// ft_lstadd_back(lst, head);
 		free(buffer);
 		if (bytes_read == 0)
 			break ;
@@ -69,10 +69,10 @@ char	*line_splitter(char *full_content, char *remain)
 	int		i;
 	size_t	full_content_size;
 
-	// full_content_size = 0;
+	full_content_size = 0;
 	full_content_size = ft_strlen(full_content);
 	i = 0;
-	// nl_index = 0;
+	nl_index = 0;
 	nl_index = get_nl_char(full_content);
 	if (nl_index >= 0)
 	{

@@ -6,13 +6,13 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/07 18:51:07 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/07 22:22:16 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_list	*ft_lstnew(char *content)
+t_list	*ft_lstnew(char *content, t_list **lst)
 {
 	t_list	*node;
 	char	*temp_cont;
@@ -29,6 +29,10 @@ t_list	*ft_lstnew(char *content)
 	*temp_cont = '\0';
 	node->content_len = ft_strlen(node->content);
 	node->next = NULL;
+	if (*lst == NULL)
+		*lst = node;
+	else
+		ft_lstlast(*lst)->next = node;
 	return (node);
 }
 
@@ -41,15 +45,15 @@ t_list	*ft_lstlast(t_list *lst)
 	return (lst);
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	if (!new)
-		return ;
-	if (*lst == NULL)
-		*lst = new;
-	else
-		ft_lstlast(*lst)->next = new;
-}
+// void	ft_lstadd_back(t_list **lst, t_list *new)
+// {
+// 	if (!new)
+// 		return ;
+// 	if (*lst == NULL)
+// 		*lst = new;
+// 	else
+// 		ft_lstlast(*lst)->next = new;
+// }
 
 size_t	ft_strlen(const char *s)
 {
