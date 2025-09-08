@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/07 22:31:21 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/07 22:42:47 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	write_content_to_nodes(char *buffer, int fd, t_list *head, t_list **lst)
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[bytes_read] = '\0';
 		head = ft_lstnew(buffer, lst);
-		// ft_lstadd_back(lst, head);
 		free(buffer);
 		if (bytes_read == 0)
 			break ;
@@ -114,13 +113,18 @@ char	*get_next_line(int fd)
 int main(int argc, char *argv[])
 {
 	char	*str;
+	int		i;
 
 	if (argc != 2)
 		return (0);
 	int	fd = open(argv[1], O_RDONLY);
-
-	str = get_next_line(fd);
-	printf("%s", str);
-	free(str);
+	i = 0;
+	while (i < 2)
+	{
+		str = get_next_line(fd);
+		printf("%s", str);
+		free(str);
+		i++;
+	}
 	return (0);
 }

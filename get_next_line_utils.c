@@ -6,7 +6,7 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/07 22:22:16 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/07 22:39:40 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,6 @@ t_list	*ft_lstlast(t_list *lst)
 		lst = lst->next;
 	return (lst);
 }
-
-// void	ft_lstadd_back(t_list **lst, t_list *new)
-// {
-// 	if (!new)
-// 		return ;
-// 	if (*lst == NULL)
-// 		*lst = new;
-// 	else
-// 		ft_lstlast(*lst)->next = new;
-// }
 
 size_t	ft_strlen(const char *s)
 {
