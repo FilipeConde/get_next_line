@@ -6,24 +6,24 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/07 22:42:47 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/08 22:33:04 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-void	write_content_to_nodes(char *buffer, int fd, t_list *head, t_list **lst)
+static void	write_content_to_nodes(char *buffer, int fd, t_list *head, t_list **lst)
 {
 	ssize_t	bytes_read;
 	
 	bytes_read = 0;
 	while (bytes_read >= 0)
 	{
+		head = ft_lstnew(lst);
 		buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[bytes_read] = '\0';
-		head = ft_lstnew(buffer, lst);
 		free(buffer);
 		if (bytes_read == 0)
 			break ;
@@ -32,7 +32,7 @@ void	write_content_to_nodes(char *buffer, int fd, t_list *head, t_list **lst)
 	}
 }
 
-char	*mount_str(t_list *lst)
+static char	*mount_str(t_list *lst)
 {
 	size_t	line_size;
 	char	*mounted_str;
@@ -61,7 +61,7 @@ char	*mount_str(t_list *lst)
 	return (mounted_str);
 }
 
-char	*line_splitter(char *full_content, char *remain)
+static char	*line_splitter(char *full_content, char *remain)
 {
 	char	*current_line;
 	int		nl_index;
@@ -70,17 +70,14 @@ char	*line_splitter(char *full_content, char *remain)
 
 	full_content_size = 0;
 	full_content_size = ft_strlen(full_content);
-	i = 0;
+	i = -1;
 	nl_index = 0;
 	nl_index = get_nl_char(full_content);
 	if (nl_index >= 0)
 	{
 		current_line = malloc((nl_index + 2) * sizeof(char));
-		while (i <= nl_index)
-		{
+		while (++i <= nl_index)
 			current_line[i] = full_content[i];
-			i++;
-		}
 		remain = malloc((full_content_size - nl_index++) * sizeof(char));
 		i = 0;
 		while (nl_index < (int)full_content_size)
@@ -88,6 +85,7 @@ char	*line_splitter(char *full_content, char *remain)
 	}
 	else
 		return (NULL);
+	free(full_content);
 	return  (current_line);
 }
 
@@ -97,16 +95,21 @@ char	*get_next_line(int fd)
 	t_list	*lst;
 	t_list	*head;
 	char	*full_content;
-	char	*remain;
+	static char	*remain;
 
 	lst = NULL;
 	buffer = NULL;
 	head = NULL;
 	remain = NULL;
+	full_content = NULL;
 	write_content_to_nodes(buffer, fd, head, &lst);
 	full_content = mount_str(lst);
 	free(buffer);
-	return (line_splitter(full_content, remain));
+	ft_lstclear(&lst, &free);
+	buffer = line_splitter(full_content, remain);
+	if (remain != NULL)
+		free(remain);
+	return (buffer);
 }
 #include <fcntl.h>
 
@@ -115,16 +118,20 @@ int main(int argc, char *argv[])
 	char	*str;
 	int		i;
 
+	str = NULL;
 	if (argc != 2)
 		return (0);
 	int	fd = open(argv[1], O_RDONLY);
 	i = 0;
-	while (i < 2)
-	{
-		str = get_next_line(fd);
-		printf("%s", str);
-		free(str);
-		i++;
-	}
+	// while (i < 2)
+	// {
+	// 	str = get_next_line(fd);
+	// 	printf("%s", str);
+	// 	free(str);
+	// 	i++;
+	// }
+	str = get_next_line(fd);
+	printf("%s", str);
+	free(str);
 	return (0);
 }

@@ -6,43 +6,54 @@
 /*   By: fconde-p <fconde-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:17:50 by fconde-p          #+#    #+#             */
-/*   Updated: 2025/09/07 22:39:40 by fconde-p         ###   ########.fr       */
+/*   Updated: 2025/09/08 21:50:08 by fconde-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_list	*ft_lstnew(char *content, t_list **lst)
+t_list	*ft_lstnew(t_list **lst)
 {
 	t_list	*node;
+	t_list	*current;
 	char	*temp_cont;
 
 	node = malloc(1 * sizeof(t_list));
 	if (!node)
 		return (NULL);
-	node->content = malloc((ft_strlen(content) + 1) * sizeof(char));
-	temp_cont = node->content;
-	while (*content)
-	{
-		*temp_cont++ = *content++;
-	}
-	*temp_cont = '\0';
-	node->content_len = ft_strlen(node->content);
-	node->next = NULL;
+	// node->content = malloc((ft_strlen(content) + 1) * sizeof(char));
+	// temp_cont = node->content;
+	// while (*content)
+	// 	*temp_cont++ = *content++;
+	// *temp_cont = '\0';
+	// node->content_len = ft_strlen(node->content);
+	// node->next = NULL;
 	if (*lst == NULL)
 		*lst = node;
 	else
-		ft_lstlast(*lst)->next = node;
+	{
+		current = *lst;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = node;
+	}
 	return (node);
 }
 
-t_list	*ft_lstlast(t_list *lst)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	if (!lst)
-		return (NULL);
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
+	t_list	*ptr;
+
+	if (!lst || !del)
+		return ;
+	while (*lst)
+	{
+		ptr = (*lst)->next;
+		del((*lst)->content);
+		del(*lst);
+		*lst = ptr;
+	}
+	*lst = NULL;
 }
 
 size_t	ft_strlen(const char *s)
